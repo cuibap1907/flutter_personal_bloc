@@ -45,9 +45,11 @@ class LoginBloc {
     _passwordBehaviorsubject.sink.add(isPassValid);
   }
 
-  void checkLoginValidate()
+  bool checkLoginValidate()
   {
-    _logincheckBehaviorsubject.sink.add(isUserValid && isPassValid);
+    bool canLogin = isUserValid && isPassValid;
+    _logincheckBehaviorsubject.sink.add(canLogin);
+    return canLogin;
   }
 
   void dispose()
