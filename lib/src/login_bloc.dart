@@ -6,6 +6,7 @@ class LoginBloc {
 
   bool isPassValid;
   bool isUserValid;
+  bool isValidateAll;
 
   BehaviorSubject<bool> _userNameBehaviorsubject;
   BehaviorSubject<bool> _passwordBehaviorsubject;
@@ -19,13 +20,14 @@ class LoginBloc {
   {
     _userNameBehaviorsubject = BehaviorSubject<bool>.seeded(isUserValid);
     _passwordBehaviorsubject = BehaviorSubject<bool>.seeded(isPassValid);
+    _logincheckBehaviorsubject = BehaviorSubject<bool>.seeded(isValidateAll);
   }
 
   void validateUserName(String _username)
   {
     this.userName = _username;
     isUserValid = false;
-    if(_username.length > 6)
+    if(_username.length >= 6)
     {
       isUserValid = true;
     }
@@ -47,9 +49,11 @@ class LoginBloc {
 
   bool checkLoginValidate()
   {
-    bool canLogin = isUserValid && isPassValid;
-    _logincheckBehaviorsubject.sink.add(canLogin);
-    return canLogin;
+    print("Check validata login nghen");
+    this.isValidateAll = isUserValid && isPassValid;
+    _logincheckBehaviorsubject.sink.add(this.isValidateAll);
+    print("Return duoc gi ko ${this.isValidateAll}");
+    return this.isValidateAll;
   }
 
   void dispose()
